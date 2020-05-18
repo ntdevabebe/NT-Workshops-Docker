@@ -28,7 +28,7 @@ You can download Docker Desktop from ["Get Docker"](https://docs.docker.com/get-
 
 |                  ![hyper-v](./assets/winfeatues-hyperv.png)                   |
 | :---------------------------------------------------------------------------: |
-| Install and enable Hyper-V in Windows Featues<br>**This will require rebbot** |
+| Install and enable Hyper-V in Windows Featues<br>**This will require reboot** |
 
 | ![hyper-v](./assets/taskmanager-virtualization.png) |
 | :-------------------------------------------------: |
