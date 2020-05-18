@@ -3,7 +3,7 @@
 The goal of this assignment is to get familiar with basic container management i docker.  
 At the end you will deploy, access and analyse a simple application in a running container.
 
-1. Vverify which containers are running to avoid coliding port or container name
+1. Verify which containers are running to avoid colliding port or container name assignment
 
 ```powershell
 docker ps
@@ -12,15 +12,18 @@ docker ps
 2. deploy the container
 
 ```powershell
-docker run -d -p <available ip port>:3000 --name <container name> --hostname <hostname> ntdevabebe/assignment-1:latest
+docker run -d --name <container name> `
+--hostname <hostname> `
+-p <available ip port>:3000 `
+ntdevabebe/assignment-1:latest
 ```
 
-> | Flag        | description                                                   |
-> | :---------- | :------------------------------------------------------------ |
-> | -d          | run in detached mode. Alternative "-it" interactive tty mode |
-> | -p          | bind external port to container port                          |
-> | -n / --name | name to referance the container in docker commands            |
-> | --hostname  | The containers hostname to be assigned                        |
+> | Flag       | description                                                  |
+> | :--------- | :----------------------------------------------------------- |
+> | -d         | run in detached mode. Alternative "-it" interactive tty mode |
+> | -p         | bind external port to container port                         |
+> | --name     | name to referance the container in docker commands           |
+> | --hostname | The containers hostname to be assigned                       |
 
 3. Verify that the container is running and the ports are binded correctly
 
@@ -79,8 +82,8 @@ docker netwokrk inspect <network>  # default network is "bridge"
         "Name": "bridge"
         ...
         "Containers": {
-            "<Container ID>": { 
-                "Name": testsever, # container name
+            "<Container ID>": {
+                "Name": "testserver", # container name
                 ...
                 "IPAddress": "172.17.0.2",
                 ...
@@ -104,7 +107,7 @@ docker logs <container name>
 ```
 
 > Use the -f flag to attach and follow the output stream of the container
-![hyper-v](./assets/docker-logs-testsever.png)
+> ![hyper-v](./assets/docker-logs-testsever.png)
 
 </details>
 
