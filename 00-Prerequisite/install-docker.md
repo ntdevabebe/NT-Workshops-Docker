@@ -22,10 +22,47 @@ You can download Docker Desktop from ["Get Docker"](https://docs.docker.com/get-
 
 </details>
 
-<div class="alert alert-success">
-Blah blah blah
-</div>
-
 ## Windows 10 Pro
 
-## OSX
+### Install Hyper-V and enable Virtualization technologies in BIOS
+
+|                  ![hyper-v](./assets/winfeatues-hyperv.png)                   |
+| :---------------------------------------------------------------------------: |
+| Install and enable Hyper-V in Windows Featues<br>**This will require rebbot** |
+
+| ![hyper-v](./assets/taskmanager-virtualization.png) |
+| :-------------------------------------------------: |
+| Verify Virtualization technologi is enabled in BIOS |
+
+## Innstall Docker Desktop
+
+1. Run the downloaded executable from ["Get Docker"](https://docs.docker.com/get-docker/) webpage.
+2. When the installation is complete, start "Docker Desktop".
+3. Open the Docker Dashboard
+
+|           ![hyper-v](./assets/systemtray-docker.png)            |
+| :-------------------------------------------------------------: |
+| Right-Click the docker icon > Dasboard to open Docker Dashboard |
+
+4. Verify Docker engine version
+
+|                              ![hyper-v](./assets/dockerdashboard-engine-version.png)                               |
+| :----------------------------------------------------------------------------------------------------------------: |
+| Click the gear icon > Docker Engine. <br>At the time of writing the latest stable Docker engine version is 19.03.8 |
+
+5. Disable auto startup on login
+
+|                                                       ![hyper-v](./assets/dockerdashboard-startup.png)                                                       |
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| (Optional) Click the gear icon > General. <br>If you are not using docker all the time you can gain startup performance by disabling docker startup on login |
+
+## Run Docker commands to verify installation
+
+1. Open a powershell terminal
+2. Try to run a docker command
+
+|       ![hyper-v](./assets/docker-ps-empty.png)       |
+| :--------------------------------------------------: |
+| "docker ps" returns a list of all running containers |
+
+__Docker should now be running correctly and is ready for use.__
