@@ -12,6 +12,7 @@ You can download Docker Desktop from ["Get Docker"](https://docs.docker.com/get-
     - 64 bit processor
 
 </details>
+
 <details>
     <summary>System requiremetns for OSX</summary>
 
