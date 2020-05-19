@@ -7,7 +7,7 @@ Frontend: __ntdevabebe/a02-frontend__
 Backend: __ntdevabebe/a02-backend__
 
 
-1. Deploy the backend server. Add atleast the below flags
+1. Deploy the backend server. Add at least the below flags to docker run command.
 * --env BACKEND_PORT=\<any port\> to define witch internal port the backend-server listens on.  
 
 <details>
@@ -25,6 +25,12 @@ docker run -d --name <container name> --hostname <hostname> --env <enviromental 
 
 <details>
     <summary> Proposed solution </summary>
+
+```powershell
+docker exec -it <container name> ip add
+```
+
+![run backend](./assets/docker-exec-ip-backend.png)
 
 Alternative 1 - Inspect the container
 
@@ -78,7 +84,7 @@ docker netwokrk inspect <network>  # default network is "bridge"
 
 3. Deploy frontend server. Add at least the below flags
 * -p \<available port\>:3000 to expose the container to the host network.
-* env:BACKEND_SERVER_ADDRESS to define path to the backend in the from  "http://\<ip-address\>:\<port\>".  
+* --env BACKEND_SERVER_ADDRESS=<path> to define path to the backend in the from  "http://\<ip-address\>:\<port\>".  
 * (Bonus) use --add-host \<hostname\>:\<ip-address\> to add a hostname entry in the container and use hostname instead of ipaddress to define path to backend
 
 <details>
@@ -125,12 +131,14 @@ docker ps
 
 </details>
 
-6. Browse http://localhost:\<port of frontend\>. Do you get any response? where is the response coming from?
+6. Browse http://localhost:\<port of frontend\>. Do you get any response? Where is the response coming from?
 
 <details>
     <summary> Proposed solution</summary>
 
-    The frontend-container expose port 3000 outside the cluster and thus is reachable from host. Since containers can communicate with eachother as long as they are on the same network, the response message is actually from the backend server routed trough the frontend server. 
+    The frontend-container expose port 3000 outside the cluster and thus is reachable from host.  
+    Since containers can communicate with eachother as long as they are on the same network,  
+    the response message is actually from the backend server routed trough the frontend server. 
 
 </details>
 
@@ -138,6 +146,10 @@ docker ps
 7. Deploy another fronend container but this time add --env PORT=\<a port other than 3000\> and -p \<available port\>:3000. 
    * When browsing http://localhost:\<port of frontend\> do you get any response?
    * Use the command below to determine the correct port you need to change 3000 with to make it work.
+  
+```powershell
+docker logs \<container name\> 
+```
 
 
 
