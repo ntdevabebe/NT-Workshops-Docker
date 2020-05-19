@@ -3,6 +3,9 @@
 The goal of this assignment is to get familiar with basic container management i docker.  
 At the end you will deploy, access and analyse a simple application in a running container.
 
+_Use this image for this assignment_  
+Simple-container: __ntdevabebe/a01-simple__  
+
 1. Verify which containers are running to avoid colliding port or container name assignment
 
 ```powershell
@@ -12,10 +15,7 @@ docker ps
 2. deploy the container
 
 ```powershell
-docker run -d --name <container name> `
---hostname <hostname> `
--p <available ip port>:3000 `
-ntdevabebe/assignment-1:latest
+docker run -d --name <container name> --hostname <hostname> -p <available ip port>:3000 ntdevabebe/assignment-1:latest
 ```
 
 > | Flag       | description                                                  |
@@ -40,7 +40,7 @@ docker ps
 
 </details>
 
-4. Navigate to [http://localhost:3000>](http://localhost:3000) to se the running application
+4. Navigate to [http://localhost:3000](http://localhost:3000) to se the running application
 
 5. Find the ipaddress of the container
 
