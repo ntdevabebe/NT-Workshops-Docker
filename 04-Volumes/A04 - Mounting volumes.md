@@ -1,127 +1,79 @@
-# A1 - Containers
+#  A04 - Mounting volumes
 
 The goal of this assignment is to get familiar with basic container management i docker.  
-At the end you will deploy, access and analyse a simple application in a running container.
+At the end you will deploy, access and analyse interactions between multiple containers running in the same cluster
 
-1. Verify which containers are running to avoid colliding port or container name assignment
+Webserver image: __richarvey/nginx-php-fpm:latest__  
 
-```powershell
-docker ps
-```
-
-2. deploy the container
-
-```powershell
-docker run -d --name <container name> `
---hostname <hostname> `
--p <available ip port>:3000 `
-ntdevabebe/assignment-1:latest
-```
-
-> | Flag       | description                                                  |
-> | :--------- | :----------------------------------------------------------- |
-> | -d         | run in detached mode. Alternative "-it" interactive tty mode |
-> | -p         | bind external port to container port                         |
-> | --name     | name to referance the container in docker commands           |
-> | --hostname | The containers hostname to be assigned                       |
-
-3. Verify that the container is running and the ports are binded correctly
+1. Deploy a container named wbserver-default and bind it to port 8080 on host.
 
 <details>
-    <summary> Proposed solution </summary>
+    <summary> Proposed solution for bonus </summary>
 
 ```powershell
-docker ps
+docker run -d -p <external port>:<internal port> --name <container name> <image name>
 ```
 
-|             ![hyper-v](./assets/docker-ps-simpleapp.png)             |
-| :------------------------------------------------------------------: |
-| "docker ps" returns a list with basic info of all running containers |
+![run webserver-default](./assets/docker-run-nginx-default.png)
 
 </details>
 
-4. Navigate to [http://localhost:3000>](http://localhost:3000) to se the running application
-
-5. Find the ipaddress of the container
+2. Browse htto://localhost:8080. What do you see?
 
 <details>
-    <summary> Proposed solution </summary>
+    <summary> Proposed solution for bonus </summary>
 
-Alternative 1 - Inspect the container
-
-```powershell
-docker inspect <container name>
-```
-
-```powershell
-[
-    {
-        ...
-        "Networks": {
-            "bridge": {
-                ...
-                "IPAddress": "172.17.0.2",
-                ...
-            }
-            ...
-        }
-        ...
-    }
-]
-```
-
-Alternative 2 - Inspect network
-
-```powershell
-docker netwokrk inspect <network>  # default network is "bridge"
-```
-
-```powershell
-[
-    {
-        "Name": "bridge"
-        ...
-        "Containers": {
-            "<Container ID>": {
-                "Name": "testserver", # container name
-                ...
-                "IPAddress": "172.17.0.2",
-                ...
-            }
-            ...
-        }
-        ...
-    }
-]
-```
+    The webserver is serving the default php welcome page
 
 </details>
+
+3. Deploy another container
+    * named webserver1
+    * bind it to port 8081 on host
+    * bind the folder .\www\html (use absolute path) in this folder to /var/www/html inside the container.  
+    (Hint! Use the "pwd" command to get the absolute path to the folder and add filename to it )
+
+<details>
+    <summary> Proposed solution for bonus </summary>
+
+```powershell
+docker run -d -p <external port>:<internal port> --name <container name> -v <path to folder/file on host>:<path in container> <image name>
+```
+
+![run webserver-default](./assets/docker-run-webserver1.png)
+
+</details>
+
+4. Browse http://localhost:8081. What do you see?
+
+<details>
+    <summary> Proposed solution for bonus </summary>
+
+    You should see a simple html page with the text "Hello Trustee!!"
+
+</details>
+
+5. Run the below commands 
+
+Shows the content of /var/www/html folder inside webserver1 container
+```powershell 
+docker exec -it webserber1 ls -la /var/www/html  
+```
+
+ Showes the content if index.html file in webserver1
+```powershell
+docker exec -it webserber1 cat /var/www/html/index.html  
+```
+
+6. Make an alteration in index.html in ./www/html folder on host, save and run the last command again.  
+   What happened to the index.html file inside the container? Reload browser.
+
+7. Deploy a third container 
+    * named webserver2
+    * bind it to port 8082 on host
+    * bind the folder .\www\html (use absolute path) in this folder to /var/www/html inside the container.
+  
+8. Browse http://localhost:8082. What do you see?
    
-6. Attach to logs of the container
-
-<details>
-    <summary> Proposed solution </summary>
-
-```powershell
-docker logs <container name>
-```
-
-> Use the -f flag to attach and follow the output stream of the container
-> ![hyper-v](./assets/docker-logs-testsever.png)
-
-</details>
-
-7. Attach to the running container
-
-<details>
-    <summary> Proposed solution </summary>
-
-```powershell
-docker exec -it <container name> sh #attach a sh shell to container as root - OBS!! you are now entering linux world
-```
-
-![attach to container](./assets/docker-exec-testsever.png)
-
-</details>
-
-8. [Bonus challenge] Change the output message and verify the change. _(Hint: use vim to edit text)_
+9.  Make another alteration to the index.html file on host and browse both port 8081 and port 8082. What do you see?
+    
