@@ -1,0 +1,15 @@
+{
+  "name": "simple-contianer",
+  "version": "1.0.0",
+  "description": "NT Workshop simple container",
+  "main": "src/server.js",
+  "author": "Abebe Bediye",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "ip": "^1.1.5"
+  },
+  "scripts": {
+    "start": "node src/server.js"
+  }
+}
