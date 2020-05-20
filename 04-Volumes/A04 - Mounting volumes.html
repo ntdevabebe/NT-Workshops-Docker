@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>A04 - Mounting volumes</title>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        
+    </head>
+    <body>
+        <h1 id="a04---mounting-volumes">A04 - Mounting volumes</h1>
+<p>The goal of this assignment is to get familiar with basic container management i docker.<br>
+At the end you will deploy, access and analyse interactions between multiple containers running in the same cluster</p>
+<p>Webserver image: <strong>richarvey/nginx-php-fpm:latest</strong></p>
+<ol>
+<li>Deploy a container named wbserver-default and bind it to port 8080 on host.</li>
+</ol>
+<details>
+    <summary> Proposed solution for bonus </summary>
+<pre><code class="language-powershell"><div>docker run -d -p &lt;external port&gt;:&lt;internal port&gt; --name &lt;container name&gt; &lt;image name&gt;
+</div></code></pre>
+<p><img src="file:///f:\Project\Workshops\NT-Workshops-Docker\04-Volumes\assets\docker-run-nginx-default.png" alt="run webserver-default"></p>
+</details>
+<ol start="2">
+<li>Browse htto://localhost:8080. What do you see?</li>
+</ol>
+<details>
+    <summary> Proposed solution for bonus </summary>
+<pre><code>The webserver is serving the default php welcome page
+</code></pre>
+</details>
+<ol start="3">
+<li>Deploy another container
+<ul>
+<li>named webserver1</li>
+<li>bind it to port 8081 on host</li>
+<li>bind the folder .\www\html (use absolute path) in this folder to /var/www/html inside the container.<br>
+(Hint! Use the &quot;pwd&quot; command to get the absolute path to the folder and add filename to it )</li>
+</ul>
+</li>
+</ol>
+<details>
+    <summary> Proposed solution for bonus </summary>
+<pre><code class="language-powershell"><div>docker run -d -p &lt;external port&gt;:&lt;internal port&gt; --name &lt;container name&gt; -v &lt;path to folder/file on host&gt;:&lt;path <span class="hljs-keyword">in</span> container&gt; &lt;image name&gt;
+</div></code></pre>
+<p><img src="file:///f:\Project\Workshops\NT-Workshops-Docker\04-Volumes\assets\docker-run-webserver1.png" alt="run webserver-default"></p>
+</details>
+<ol start="4">
+<li>Browse <a href="http://localhost:8081">http://localhost:8081</a>. What do you see?</li>
+</ol>
+<details>
+    <summary> Proposed solution for bonus </summary>
+<pre><code>You should see a simple html page with the text &quot;Hello Trustee!!&quot;
+</code></pre>
+</details>
+<ol start="5">
+<li>Run the below commands</li>
+</ol>
+<p>Shows the content of /var/www/html folder inside webserver1 container</p>
+<pre><code class="language-powershell"><div>docker exec -it webserber1 ls -la /var/www/html  
+</div></code></pre>
+<p>Showes the content if index.html file in webserver1</p>
+<pre><code class="language-powershell"><div>docker exec -it webserber1 cat /var/www/html/index.html  
+</div></code></pre>
+<ol start="6">
+<li>
+<p>Make an alteration in index.html in ./www/html folder on host, save and run the last command again.<br>
+What happened to the index.html file inside the container? Reload browser.</p>
+</li>
+<li>
+<p>Deploy a third container</p>
+<ul>
+<li>named webserver2</li>
+<li>bind it to port 8082 on host</li>
+<li>bind the folder .\www\html (use absolute path) in this folder to /var/www/html inside the container.</li>
+</ul>
+</li>
+<li>
+<p>Browse <a href="http://localhost:8082">http://localhost:8082</a>. What do you see?</p>
+</li>
+<li>
+<p>Make another alteration to the index.html file on host and browse both port 8081 and port 8082. What do you see?</p>
+</li>
+</ol>
+
+    </body>
+    </html>

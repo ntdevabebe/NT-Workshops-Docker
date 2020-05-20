@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>A02 - Multiple Containers</title>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        
+    </head>
+    <body>
+        <h1 id="a02---multiple-containers">A02 - Multiple Containers</h1>
+<p>The goal of this assignment is to get familiar with basic container management i docker.<br>
+At the end you will deploy, access and analyse interactions between multiple containers running in the same cluster</p>
+<p><em>Use these images for this assignment</em><br>
+Frontend: <strong>ntdevabebe/a02-frontend</strong><br>
+Backend: <strong>ntdevabebe/a02-backend</strong></p>
+<ol>
+<li>Deploy the backend server. Add at least the below flags to docker run command.</li>
+</ol>
+<ul>
+<li>--env BACKEND_PORT=&lt;any port&gt; to define witch internal port the backend-server listens on.</li>
+</ul>
+<details>
+    <summary> Proposed solution </summary>
+<pre><code class="language-powershell"><div>docker run -d --name &lt;container name&gt; --hostname &lt;hostname&gt; --env &lt;enviromental variabel&gt; &lt;image name&gt;
+</div></code></pre>
+<p><img src="file:///f:\Project\Workshops\NT-Workshops-Docker\02-Container\assets\docker-run-backend.png" alt="run backend"></p>
+</details>
+<ol start="2">
+<li>Find ip address of the backend server</li>
+</ol>
+<details>
+    <summary> Proposed solution </summary>
+<pre><code class="language-powershell"><div>docker exec -it &lt;container name&gt; ip add
+</div></code></pre>
+<p><img src="file:///f:\Project\Workshops\NT-Workshops-Docker\02-Container\assets\docker-exec-ip-backend.png" alt="run backend"></p>
+<p>Alternative 1 - Inspect the container</p>
+<pre><code class="language-powershell"><div>docker inspect &lt;container name&gt;
+</div></code></pre>
+<pre><code class="language-powershell"><div>[
+    {
+        ...
+        <span class="hljs-string">"Networks"</span>: {
+            <span class="hljs-string">"bridge"</span>: {  <span class="hljs-comment"># network name</span>
+                ...
+                <span class="hljs-string">"IPAddress"</span>: <span class="hljs-string">"172.17.0.2"</span>,
+                ...
+            }
+            ...
+        }
+        ...
+    }
+]
+</div></code></pre>
+<p>Alternative 2 - Inspect network</p>
+<pre><code class="language-powershell"><div>docker netwokrk inspect &lt;network&gt;  <span class="hljs-comment"># default network is "bridge"</span>
+</div></code></pre>
+<pre><code class="language-powershell"><div>[
+    {
+        <span class="hljs-string">"Name"</span>: <span class="hljs-string">"bridge"</span>
+        ...
+        <span class="hljs-string">"Containers"</span>: {
+            <span class="hljs-string">"&lt;Container ID&gt;"</span>: {
+                <span class="hljs-string">"Name"</span>: <span class="hljs-string">"backend"</span>, <span class="hljs-comment"># container name</span>
+                ...
+                <span class="hljs-string">"IPAddress"</span>: <span class="hljs-string">"172.17.0.2"</span>,
+                ...
+            }
+            ...
+        }
+        ...
+    }
+]
+</div></code></pre>
+</details>
+<ol start="3">
+<li>Deploy frontend server. Add at least the below flags</li>
+</ol>
+<ul>
+<li>-p &lt;available port&gt;:3000 to expose the container to the host network.</li>
+<li>--env BACKEND_SERVER_ADDRESS=<path> to define path to the backend in the from  &quot;http://&lt;ip-address&gt;:&lt;port&gt;&quot;.</li>
+<li>(Bonus) use --add-host &lt;hostname&gt;:&lt;ip-address&gt; to add a hostname entry in the container and use hostname instead of ipaddress to define path to backend</li>
+</ul>
+<details>
+    <summary> Proposed solution </summary>
+<pre><code class="language-powershell"><div>docker run -d --name &lt;container name&gt; --hostname &lt;hostname&gt; --env &lt;enviromental variabel&gt; &lt;image name&gt;
+</div></code></pre>
+<p><img src="file:///f:\Project\Workshops\NT-Workshops-Docker\02-Container\assets\docker-run-frontend.png" alt="run backend"></p>
+<details>
+    <summary> Proposed solution for bonus </summary>
+<pre><code class="language-powershell"><div>docker run -d --name &lt;container name&gt; --hostname &lt;hostname&gt; --env &lt;enviromental variabel&gt; --add-host &lt;hostname&gt;:&lt;ip-address&gt; &lt;image name&gt;
+</div></code></pre>
+<p><img src="file:///f:\Project\Workshops\NT-Workshops-Docker\02-Container\assets\docker-run-frontend-bonus.png" alt="run backend"></p>
+</details>
+</details>
+<ol start="4">
+<li>Verify that the backend and frontend servers are running.</li>
+</ol>
+<details>
+    <summary> Proposed solution</summary>
+<pre><code class="language-powershell"><div>docker ps
+</div></code></pre>
+<p><img src="file:///f:\Project\Workshops\NT-Workshops-Docker\02-Container\assets\docker-ps-multi-container.png" alt="run backend"></p>
+</details>
+<ol start="5">
+<li>Browse <a href="http://localhost">http://localhost</a>:&lt;port of backend&gt; and http://&lt;ip address of backend&gt;:&lt;port of backend&gt;. Do you get any response?</li>
+</ol>
+<details>
+    <summary> Proposed solution</summary>
+<pre><code>The container does not expose any port outside the cluster and thus is unreachable from host. 
+</code></pre>
+</details>
+<ol start="6">
+<li>Browse <a href="http://localhost">http://localhost</a>:&lt;port of frontend&gt;. Do you get any response? Where is the response coming from?</li>
+</ol>
+<details>
+    <summary> Proposed solution</summary>
+<pre><code>The frontend-container expose port 3000 outside the cluster and thus is reachable from host.  
+Since containers can communicate with eachother as long as they are on the same network,  
+the response message is actually from the backend server routed trough the frontend server. 
+</code></pre>
+</details>
+<p>(Bonus below)</p>
+<ol start="7">
+<li>Deploy another fronend container but this time add --env PORT=&lt;a port other than 3000&gt; and -p &lt;available port&gt;:3000.</li>
+</ol>
+<ul>
+<li>When browsing <a href="http://localhost">http://localhost</a>:&lt;port of frontend&gt; do you get any response?</li>
+<li>Use the command below to determine the correct port you need to change 3000 with to make it work.</li>
+</ul>
+<pre><code class="language-powershell"><div>docker logs \&lt;container name\&gt;
+</div></code></pre>
+
+    </body>
+    </html>

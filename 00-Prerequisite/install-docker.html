@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Docker installation guide</title>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        
+    </head>
+    <body>
+        <h1 id="docker-installation-guide">Docker installation guide</h1>
+<p>You can download Docker Desktop from <a href="https://docs.docker.com/get-docker/">&quot;Get Docker&quot;</a> webpage.</p>
+<details>
+    <summary>System requiremetns for Windows</summary>
+<pre><code>- Windows 10 64-bit: Pro, Enterprise, or Education (Build 15063 or later)
+- Hyper-V and Containers must be enabled in Windows features.
+- BIOS-level hardware virtualization support must be enabled in the BIOS settings
+- 4GB system RAM
+- 64 bit processor
+</code></pre>
+</details>
+<details>
+    <summary>System requiremetns for OSX</summary>
+<pre><code>- Mac hardware must be a 2010 or a newer model, with Intel’s hardware support for memory management unit (MMU) virtualization, including Extended Page Tables (EPT) and Unrestricted Mode. You can check to see if your machine has this support by running the following command in a terminal: sysctl kern.hv_support. If your Mac supports the Hypervisor framework, the command prints kern.hv_support: 1
+- macOS must be version 10.13 or newer. That is, Catalina, Mojave, or High Sierra. We recommend upgrading to the latest version of macOS. If you experience any issues after upgrading your macOS to version 10.15, you must install the latest version of Docker Desktop to be compatible with this version of macOS. Note: Docker supports Docker Desktop on the most recent versions of macOS. That is, the current release of macOS and the previous two releases. Docker Desktop currently supports macOS Catalina, macOS Mojave, and macOS High Sierra.As new major versions of macOS are made generally available, Docker stops supporting the oldest version and support the newest version of macOS (in addition to the previous two releases).
+- 4GB system RAM
+- VirtualBox prior to version 4.3.30 must not be installed as it is not compatible with Docker Desktop.
+</code></pre>
+</details>
+<h2 id="windows-10-pro">Windows 10 Pro</h2>
+<h3 id="install-hyper-v-and-enable-virtualization-technologies-in-bios">Install Hyper-V and enable Virtualization technologies in BIOS</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="file:///f:\Project\Workshops\NT-Workshops-Docker\00-Prerequisite\assets\winfeatues-hyperv.png" alt="hyper-v"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Install and enable Hyper-V in Windows Featues<br><strong>This will require reboot</strong></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="file:///f:\Project\Workshops\NT-Workshops-Docker\00-Prerequisite\assets\taskmanager-virtualization.png" alt="hyper-v"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Verify Virtualization technologi is enabled in BIOS</td>
+</tr>
+</tbody>
+</table>
+<h2 id="innstall-docker-desktop">Innstall Docker Desktop</h2>
+<ol>
+<li>Run the downloaded executable from <a href="https://docs.docker.com/get-docker/">&quot;Get Docker&quot;</a> webpage.</li>
+<li>When the installation is complete, start &quot;Docker Desktop&quot;.</li>
+<li>Open the Docker Dashboard</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="file:///f:\Project\Workshops\NT-Workshops-Docker\00-Prerequisite\assets\systemtray-docker.png" alt="hyper-v"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Right-Click the docker icon &gt; Dasboard to open Docker Dashboard</td>
+</tr>
+</tbody>
+</table>
+<ol start="4">
+<li>Verify Docker engine version</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="file:///f:\Project\Workshops\NT-Workshops-Docker\00-Prerequisite\assets\dockerdashboard-engine-version.png" alt="hyper-v"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Click the gear icon &gt; Docker Engine. <br>At the time of writing the latest stable Docker engine version is 19.03.8</td>
+</tr>
+</tbody>
+</table>
+<ol start="5">
+<li>Disable auto startup on login</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="file:///f:\Project\Workshops\NT-Workshops-Docker\00-Prerequisite\assets\dockerdashboard-startup.png" alt="hyper-v"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">(Optional) Click the gear icon &gt; General. <br>If you are not using docker all the time you can gain startup performance by disabling docker startup on login</td>
+</tr>
+</tbody>
+</table>
+<h2 id="run-docker-commands-to-verify-installation">Run Docker commands to verify installation</h2>
+<ol>
+<li>Open a powershell terminal</li>
+<li>Try to run a docker command</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="file:///f:\Project\Workshops\NT-Workshops-Docker\00-Prerequisite\assets\docker-ps-empty.png" alt="hyper-v"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">&quot;docker ps&quot; returns a list of all running containers</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Docker should now be running correctly and is ready for use.</strong></p>
+
+    </body>
+    </html>
